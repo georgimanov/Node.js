@@ -1,0 +1,19 @@
+extends ../shared/layout
+
+block main-content
+    h1 Add new Comment
+
+    // get id for comment?
+    form.form-horizontal(action="/comment", method="POST")
+
+        .form-group
+            label.col-sm-2.control-label(for="tb-content")
+                | Comment:
+            .col-sm-10
+                input.form-control#tb-content(name="content", placeholder="Your comment here...")
+        .form-group
+            .col-sm-10
+                input.form-control.hidden#tb-playlist-id(name="playlistId", value='#{id}')
+
+        .form-group
+            button.btn.btn-primary.col-sm-12 Add Comment

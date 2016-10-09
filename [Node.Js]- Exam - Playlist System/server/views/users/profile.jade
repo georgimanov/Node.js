@@ -1,0 +1,44 @@
+extends ../shared/layout
+block main-content
+    .container
+        .col-lg-6.col-sm-6.col-md-6
+            .card.hovercard
+                .cardheader
+            .info
+                .title
+                    h1= currentUser.username
+                hr
+                .p
+                    strong First name:
+                    span= currentUser.firstName
+                .p
+                    strong First name:
+                    span= currentUser.lastName
+                .p
+                    strong Raging:
+                    span= currentUser.rating || 0.00
+                .p
+                    strong Email:
+                    a(href='#{currentUser.email}') #{currentUser.email}
+                .p
+                    a.btn.btn-info(href="/profile/edit") EDIT PROFILE
+                .p
+                    hr
+                    strong Playlist(s):
+                    if(currentUser.playlists.length > 0)
+                        table
+                            th Url
+                            th Rating
+                            each list in currentUser.playlists
+                                tr
+                                  td
+                                    a(href="#{list.url}") #{list.url}
+                                  td
+                                    #{list.rating}
+
+                    else
+                        span No playlist(s)!
+
+
+        .col-lg-6.col-sm-6.col-md-6
+            img.img-thumbnail(src='#{currentUser.image}')
