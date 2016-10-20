@@ -1,0 +1,73 @@
+extends ../shared/layout
+
+block main-content
+
+    .container
+        h1
+            .col-lg-4
+                span Title:&nbsp;
+                span
+                    = playlist.title
+            .col-lg-3.text-center
+                span Rating:
+                span [#{playlist.rating}]
+
+            .col-lg-5.pull-right.text-right
+                form(method="post", action='/rate').form-group-sm
+                    .col-lg-8
+                        label(for='1') 1
+                        input(id='1' type="radio" name="rating" value="1")
+                        label(for='2') &nbsp;2
+                        input(id='2' type="radio" name="rating" value="2")
+                        label(for='3') &nbsp;3
+                        input(id='3' type="radio" name="rating" value="3")
+                        label(for='4') &nbsp;4
+                        input(id='4' type="radio" name="rating" value="4")
+                        label(for='5') &nbsp;5
+                        input(id='5' type="radio" name="rating" value="5")
+                        input.form-control.hidden(name="playlistId", value='#{playlist._id}')
+                    .col-lg-4
+                        input.btn.btn-lg.btn-success.pull-left(type='submit' value='Rate')
+        .clearfix
+        hr
+        .col-sm-4
+            h3 Info
+            hr
+            p Description:&nbsp;
+                = playlist.description
+            p Category:&nbsp;
+                = playlist.category
+            p Creator:&nbsp;
+               = playlist.creator
+            p Description:&nbsp;
+               = playlist.description
+            p Date:&nbsp;
+                = playlist.date
+        .col-sm-4
+            h3 Videos
+            hr
+            ul.list-group
+                li.list-group-item-info
+                    span Refresh on delete (pls, don't ask)
+                each video in playlist.videos
+                    li.list-group-item
+                        a.text-left(href='http://#{video}' target="_blank") #{video}
+                        button(class='delete-btn btn btn-danger btn-block', video-data='#{video}' playlist-data='#{playlist._id}') REMOVE
+
+            if(playlist.videos.length <= 0)
+                h5 No videos!
+
+        .col-sm-4
+            h3 Comments
+                a.btn.btn-info.pull-right(class='button', href='/playlist/' + playlist.id + '/addComment') Add comment
+            hr
+            ul.list-group
+                each comment in playlist.comments
+                    li.list-group-item
+                        strong #{comment.username}:&nbsp;
+                        span #{comment.content}
+            if(playlist.comments.length <= 0)
+                h5 No comments!
+
+    //.row
+        //    #{playlist}
